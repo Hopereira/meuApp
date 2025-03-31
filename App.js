@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View,Text,Image } from 'react-native-web';
 
-export default function App() {
+const Greetings = ({name}) => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Text style={{ fontSize: 20 }}>Bem-vindo, {name}</Text>
+    </View>
+  );
+
+  };
+
+export default function lotsOfGreetings() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+       <Greetings name="Hebert" />
+    
+       
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
