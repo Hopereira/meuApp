@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Button, TouchableOpacity, TextInput, StyleSheet } from 'react-native-web';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native-web';
 
 const Greetings = ({ name }) => {
   return (
@@ -12,17 +11,17 @@ const Greetings = ({ name }) => {
 
 export default function LotsOfGreetings() {
   const [count, setCount] = useState(0);
-  let img = 'https://lh3.googleusercontent.com/ogw/AF2bZyh_OHh8BX8Zxq11vuWKFRiR0WW6S0pbBtCnEUGjwGx94a-a=s64-c-mo';
+  const img = 'https://lh3.googleusercontent.com/ogw/AF2bZyh_OHh8BX8Zxq11vuWKFRiR0WW6S0pbBtCnEUGjwGx94a-a=s64-c-mo';
 
-  function curtir() {
-    setCount(count + 1);
-  }
+  const curtir = () => {
+    console.log('Curtir clicado'); // Para debug
+    setCount(prevCount => prevCount + 1);
+  };
 
-  function descurtir() {
-    if (count > 0) { // Evita números negativos
-      setCount(count - 1);
-    }
-  }
+  const descurtir = () => {
+    console.log('Descurtir clicado'); // Para debug
+    setCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
+  };
 
   return (
     <View style={{ marginLeft: 100, alignItems: 'center', top: 100 }}>
@@ -31,21 +30,29 @@ export default function LotsOfGreetings() {
         source={{ uri: img }}
         style={{ width: 100, height: 100, borderRadius: 50, marginTop: 20 }}
       />
-      <Button title="Curtir" onPress={curtir} />
-
-      <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-        <Ionicons name="heart" size={24} color="red" />
-        <Text style={{ fontSize: 18, marginTop: 1, paddingHorizontal: 10 }}>{count} curtidas</Text>
-      </View>
-
+      
+      {/* Botão Curtir - maior e com mais margem */}
       <TouchableOpacity
-        style={styles.descurtirButton}
-        onPress={descurtir}
+        style={[styles.button, styles.curtirButton]}
+        onPress={curtir}
       >
-        <Text style={styles.descurtirText}>Descurtir</Text>
+        <Text style={styles.buttonText}>Curtir</Text>
       </TouchableOpacity>
 
-      <Text style={{ fontSize: 12, marginTop: 20 }}>Digite seu nome</Text>
+      <View style={styles.likesContainer}>
+        <Text style={styles.heartIcon}>♥</Text>
+        <Text style={styles.likesCount}>{count} curtidas</Text>
+      </View>
+
+      {/* Botão Descurtir - mesmo estilo do curtir mas vermelho */}
+      <TouchableOpacity
+        style={[styles.button, styles.descurtirButton]}
+        onPress={descurtir}
+      >
+        <Text style={styles.buttonText}>Descurtir</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.label}>Digite seu nome</Text>
       <TextInput
         style={styles.input}
         placeholder="Seu nome aqui!!"
@@ -56,29 +63,61 @@ export default function LotsOfGreetings() {
 }
 
 const styles = StyleSheet.create({
-  descurtirButton: {
-    width: 100,
-    height: 40,
-    marginTop: 20,
-    backgroundColor: 'red',
-    borderRadius: 5,
-    borderWidth: 1,
+  button: {
+    width: 120,  // Largura aumentada
+    height: 45,  // Altura aumentada
+    marginTop: 25,  // Margem superior aumentada
+    borderRadius: 8,  // Bordas mais arredondadas
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
   },
-  descurtirText: {
+  curtirButton: {
+    backgroundColor: '#4CAF50',  // Verde mais bonito
+  },
+  descurtirButton: {
+    backgroundColor: '#F44336',  // Vermelho mais bonito
+    marginTop: 15,  // Margem menor que o botão curtir
+  },
+  buttonText: {
     color: 'white',
-    fontSize: 15,
+    fontSize: 16,  // Texto um pouco maior
+    fontWeight: 'bold',
+  },
+  likesContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  heartIcon: {
+    fontSize: 28,  // Ícone maior
+    color: 'red',
+    marginRight: 10,  // Espaçamento do ícone
+  },
+  likesCount: {
+    fontSize: 18,
+  },
+  label: {
+    fontSize: 14,
+    marginTop: 25,
+    color: '#555',
   },
   input: {
-    width: 200,
-    height: 40,
-    marginTop: 10,
+    width: 220,  // Largura aumentada
+    height: 45,  // Altura aumentada
+    marginTop: 15,
     backgroundColor: 'white',
     color: 'black',
-    borderRadius: 5,
+    borderRadius: 8,  // Bordas mais arredondadas
     borderWidth: 1,
-    padding: 5,
+    borderColor: '#ddd',
+    padding: 10,
     textAlign: 'center',
+    fontSize: 16,
   },
 });
