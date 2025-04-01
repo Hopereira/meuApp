@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native-web';
 
 const Greetings = ({ name }) => {
@@ -11,12 +11,19 @@ const Greetings = ({ name }) => {
 
 export default function LotsOfGreetings() {
   const [count, setCount] = useState(0);
+  const [msg, setmsg] = useState('');
+  
+  // Imagem de exemplo
   const img = 'https://lh3.googleusercontent.com/ogw/AF2bZyh_OHh8BX8Zxq11vuWKFRiR0WW6S0pbBtCnEUGjwGx94a-a=s64-c-mo';
 
   const curtir = () => {
     console.log('Curtir clicado'); // Para debug
     setCount(prevCount => prevCount + 1);
   };
+  useEffect(() => {
+    console.log('Contador atualizado:', count); // Para debug
+  }, [count]);
+  // Função para descurtir
 
   const descurtir = () => {
     console.log('Descurtir clicado'); // Para debug
@@ -58,6 +65,7 @@ export default function LotsOfGreetings() {
         placeholder="Seu nome aqui!!"
         keyboardType="default"
       />
+      <Text style={styles.label}>{msg}</Text>
     </View>
   );
 }
